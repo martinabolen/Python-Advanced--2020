@@ -1,0 +1,295 @@
+1.
+numbers=input().split(' ')
+new_numbers=[]
+
+for i in range(len(numbers)):
+    new_numbers.append(numbers.pop())
+
+print(' '.join(map(str,new_numbers)))
+
+
+2.
+n=int(input())
+s=[]
+max_number=-9999999
+min_number=9999999
+
+for i in range(n):
+    command=input().split(' ')
+    type=int(command[0])
+    if type==1:
+        element = int(command[1])
+        s.append(element)
+    if s:
+        if type==2:
+            s.pop()
+        elif type==3:
+            for number in s:
+                if number>max_number:
+                    max_number=number
+            print(max_number)
+        elif type==4:
+            for number in s:
+                if number<min_number:
+                    min_number=number
+            print(min_number)
+
+s=[str(i) for i in s]
+print(', '.join(reversed(s)))
+
+
+
+3.
+quantity=int(input())
+from collections import deque
+order=deque([int(i) for i in input().split(' ')])
+max_number=-999999
+
+for number in order:
+    if number>max_number:
+        max_number=number
+print(max_number)
+
+
+n=len(order)
+
+for i in range(n):
+    number=order[0]
+    if quantity>=number:
+        quantity-=number
+        order.popleft()
+
+
+
+if order:
+    order = (str(i) for i in order)
+    print(f"Orders left: {' '.join(order)}")
+else:
+    print('Orders complete')
+    
+    
+  
+4.
+clothes=[int(i) for i in input().split(' ')]
+capacity=int(input())
+clothes_sum=0
+rack=0
+n=len(clothes)-1
+
+while clothes:
+    number=clothes[-1]
+    clothes_sum+=number
+    if clothes_sum<capacity:
+        clothes.pop()
+    elif clothes_sum==capacity:
+        if clothes:
+            clothes_sum=0
+            clothes.pop()
+            rack+=1
+        continue
+    elif clothes_sum>capacity:
+       rack += 1
+       clothes_sum=0
+
+if clothes_sum>0:
+    rack+=1
+
+print(rack)
+
+
+5.
+n=int(input())
+from collections import  deque
+pumps=deque([])
+left_fuel=0
+start=[]
+counter=0
+
+for i in range(n):
+    command=input().split(' ')
+    pumps.append(command)
+
+while pumps and len(start)<len(pumps):
+    pump_to_check=pumps[0]
+    fuel=int(pumps[0][0])
+    distance=int(pumps[0][1])
+    fuel+=left_fuel
+    if fuel<distance:
+        pumps.popleft()
+        pumps.append(pump_to_check)
+        start=[]
+    else:
+        left_fuel=fuel-distance
+        start.append(counter)
+        pumps.popleft()
+    counter+=1
+
+print(start[0])
+
+
+
+
+6.
+parentheses=input()
+check=[]
+pairs={
+    '(':')',
+    '{':'}',
+    '[':']',
+}
+valid=True
+
+for el in parentheses:
+    if el in '([{':
+        check.append(el)
+    if check:
+        current_element=check[-1]
+        if el in ')}]':
+            if current_element==check[-1]:
+                if pairs[current_element]==el:
+                    check.pop()
+                else:
+                    valid=False
+                    break
+    else:
+        valid=False
+        break
+
+
+if valid:
+    print('YES')
+else:
+    print('NO')
+
+
+
+
+8.
+green_light_duration=int(input())
+free_window_duration=int(input())
+from collections import deque
+cars=deque()
+left_parts=0
+left_characters=''
+counter=0
+flag=False
+total_count=0
+left_green_light_duration=0
+
+while True:
+    command=input()
+    left_seconds = 0
+    passed_cars = 0
+    counter=0
+    if command=='END':
+        break
+    if command=='green':
+        while cars:
+            counter+=1
+            car_size=len(cars[0])
+            if counter>1:
+                left_green_light_duration=left_seconds
+            else:
+                left_green_light_duration=green_light_duration
+            if left_green_light_duration==0 and cars:
+                break
+            if car_size<=left_green_light_duration:
+                left_seconds=left_green_light_duration-car_size
+                passed_cars += 1
+                cars.popleft()
+            else:
+                left_parts=car_size-left_green_light_duration
+                if left_parts <= free_window_duration:
+                    left_seconds=0
+                    passed_cars += 1
+                    cars.popleft()
+                else:
+                    left_characters=left_parts-free_window_duration
+                    left_car=car[len(car)-left_characters:len(car)-left_characters+1]
+                    print('A crash happened!')
+                    print(f'{car} was hit at {left_car}.')
+                    flag=True
+                    break
+    else:
+        car=command
+        cars.append(car)
+    if flag:
+        break
+    total_count+=passed_cars
+
+
+if command=='END':
+    print('Everyone is safe.')
+    print(f'{total_count} total cars passed the crossroads.')
+    
+    
+  
+ 9.
+ bullet_piece=int(input())
+gun_barrel=int(input())
+bullets=[int(i) for i in input().split(' ')]
+from collections import deque
+locks=deque([int(i) for i in input().split(' ')])
+value_of_intelligence=int(input())
+gun_count=0
+flag=True
+
+while True:
+    if len(bullets) == 0 and len(locks) > 0:
+        print(f"Couldn't get through. Locks left: {len(locks)}")
+        break
+    if len(locks) == 0 or len(bullets) == 0:
+        print(f'{len(bullets)} bullets left. Earned ${value_of_intelligence}')
+        break
+    if bullets[-1]<=locks[0]:
+        print('Bang!')
+        locks.popleft()
+    else:
+        print('Ping!')
+    gun_count+=1
+    bullets.pop(-1)
+    value_of_intelligence -= bullet_piece
+    if gun_count == gun_barrel:
+        if bullets:
+            print('Reloading!')
+            gun_count = 0
+            continue
+
+
+
+10.
+from collections import deque
+cups=deque([int(i) for i in input().split(' ')])
+bottles=[int(i) for i in input().split(' ')]
+total_wasted_water=0
+flag=False
+
+while True:
+    wasted_water = 0
+    if len(cups)==0 or len(bottles)==0:
+        break
+    if flag:
+        bottles[-1]+=left_bottle
+    else:
+        left_bottle = 0
+    if bottles[-1]>=cups[0]:
+        flag = False
+        wasted_water=bottles[-1]-cups[0]
+        cups.popleft()
+    else:
+        left_bottle=bottles[-1]
+        flag=True
+    bottles.pop(-1)
+    total_wasted_water+=wasted_water
+
+if len(cups)>0 and len(bottles)==0:
+    cups=[str(i) for i in cups]
+    print(f"Cups: {' '.join(cups)}")
+else:
+    bottles=[str(i) for i in bottles]
+    print(f"Bottles: {' '.join(bottles)}")
+print(f'Wasted litters of water: {total_wasted_water}')
+
+
+
+    
