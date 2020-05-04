@@ -1,0 +1,91 @@
+1.
+def solve(values):
+    from collections import defaultdict
+    occurences=defaultdict(int)
+    for value in values:
+        occurences[value]+=1
+
+    for key,value in occurences.items():
+        print (f'{key} - {value} times')
+
+
+
+values=[float(i) for i in input().split(' ')]
+solve(values)
+
+
+
+2.
+n=int(input())
+from collections import defaultdict
+grades=defaultdict(list)
+
+for i in range(n):
+    command=input().split(' ')
+    name=command[0]
+    grade=float(command[1])
+    grades[name].append(grade)
+
+
+for key,value in grades.items():
+    print(f"{key} -> {' '.join(f'{x:.2f}' for x in value)} (avg: {sum(value)/len(value):.2f})")
+
+
+
+3.
+n=int(input())
+names=[]
+
+for i in range(n):
+    names.append(input())
+
+unique_names=set(names)
+for name in unique_names:
+    print(name)
+    
+    
+    
+4.
+n=int(input())
+cars=set()
+
+for i in range(n):
+    direction,car_number=input().split(', ')
+    if direction=='IN':
+        cars.add(car_number)
+    elif direction=='OUT':
+        if car_number in cars:
+            cars.remove(car_number)
+
+
+if cars:
+    [print(car) for car in cars]
+else:
+    print('Parking Lot is Empty')
+    
+    
+    
+5.
+guests=set([input() for i in range(int(input()))])
+arrived_guests=set()
+
+while True:
+    command=input()
+    if command=='END':
+        break
+    else:
+        arrived_guests.add(command)
+
+
+not_arrived=guests^arrived_guests
+first=([i for i in not_arrived if i[0].isdigit()])
+second=([i for i in not_arrived if not i[0].isdigit()])
+print(len(not_arrived))
+if first:
+    first=sorted(list(first))
+    for el in first:
+        print(el)
+if second:
+    second=sorted(list(second))
+    for el in second:
+        print(el)
