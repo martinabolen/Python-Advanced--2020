@@ -1,0 +1,85 @@
+1.
+n=int(input())
+for element in (set(input() for i in range(n))):
+    print(element)
+    
+    
+    
+ 2.
+ numbers=input().split(' ')
+n=int(numbers[0])
+m=int(numbers[1])
+
+list=[input() for i in range(n+m)]
+n_set=set(list[:n])
+m_set=set(list[n:])
+repeaten=n_set&m_set
+for el in repeaten:
+    print(el)
+    
+    
+    
+3.
+n=int(input())
+chemichals=set()
+
+for i in range(n):
+    elements=input().split(' ')
+    for el in elements:
+        chemichals.add(el)
+
+[print(el) for el in chemichals]
+
+
+
+4.
+string=input()
+from collections import defaultdict
+occurences=defaultdict(int)
+for x in string:
+    occurences[x]+=1
+
+occurences=dict(sorted(occurences.items(),key=lambda el:el[0]))
+for key,value in occurences.items():
+    print(f'{key}: {value} time/s')
+    
+    
+ 
+5.
+contacts=dict()
+
+while True:
+    command=input()
+    if command.isdigit():
+        n=int(command)
+        break
+    name=command.split('-')[0]
+    phone=command.split('-')[1]
+    contacts[name]=phone
+
+
+for i in range(n):
+    name=input()
+    if name in contacts.keys():
+        print(f'{name} -> {contacts[name]}')
+    else:
+        print(f'Contact {name} does not exist.')
+
+
+
+6.
+n=int(input())
+intersections=[]
+
+for i in range(n):
+    ranges=input().split('-')
+    first_range=ranges[0]
+    second_range=ranges[1]
+    frange=[x for x in range(int(first_range.split(',')[0]),int(first_range.split(',')[1])+1)]
+    srange=[x for x in range(int(second_range.split(',')[0]),int(second_range.split(',')[1])+1)]
+    intersection=set(frange)&set(srange)
+    intersections.append(intersection)
+
+
+intersections=sorted(intersections,key=lambda el:-len(el))
+print(f'Longest intersection is {list(intersections[0])} with length {len(intersections[0])}')
