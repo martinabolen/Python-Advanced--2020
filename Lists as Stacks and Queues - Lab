@@ -1,0 +1,128 @@
+1.
+def solve(str):
+    s=[]
+    for ch in str:
+        s.append(ch)
+
+    reversed_str=''
+
+    while s:
+        reversed_str+=s.pop()
+
+    return reversed_str
+
+str=input()
+print(solve(str))
+
+
+2.
+def solve(expression):
+    opening_brackets=[]
+    sub_expressions=[]
+    for index in range(len(expression)):
+        ch=expression[index]
+        if ch=='(':
+            opening_brackets.append(index)
+        elif ch==')':
+            start_index=opening_brackets.pop()
+            end_index=index
+            sub_expressions.append(expression[start_index:end_index+1])
+
+    return '\n'.join(sub_expressions)
+
+
+expression=input()
+print(solve(expression))
+
+
+
+3.
+from collections import deque
+
+def solve_supermarket():
+    clients=deque()
+
+    while True:
+        string = input()
+        if string=='End':
+            print (f'{len(clients)} people remaining.')
+            break
+        elif string=='Paid':
+            while clients:
+                print(clients.popleft())
+        else:
+            clients.append(string)
+
+
+
+
+solve_supermarket()
+
+
+
+4.
+from collections import deque
+
+def solve_left_liters():
+    water = int(input())
+    people=deque()
+    while True:
+        command=input()
+        if command=='Start':
+            break
+        else:
+            people.append(command)
+
+    while True:
+        command=input()
+        if command=='End':
+            print(f'{water} liters left')
+            break
+        elif command.startswith('refill'):
+            more_liters=int(command.split(' ')[1])
+            water+=more_liters
+        else:
+            liters=int(command)
+            person = people.popleft()
+            if liters<=water:
+                water-=liters
+                print(f'{person} got water')
+            else:
+                print(f'{person} must wait')
+
+
+
+
+solve_left_liters()
+
+
+
+5.
+from collections import deque
+
+def solve_last_stay():
+    string=input().split(' ')
+    kids=deque()
+    [kids.append(name) for name in string]
+    n=int(input())
+    i=0
+
+
+    while len(kids)>0:
+        i+=1
+        kid=kids.popleft()
+        if i==n:
+            if len(kids)==0:
+                print(f'Last is {kid}')
+                break
+            else:
+                print(f'Removed {kid}')
+                i=0
+        else:
+            kids.append(kid)
+
+
+
+
+
+solve_last_stay()
