@@ -1,0 +1,298 @@
+1.
+def diagonal_difference():
+    n=int(input())
+    matrix=[]
+    for i in range(n):
+        matrix.append(list(map(int,input().split(' '))))
+
+    primary_diagonal=0
+    for j in range(n):
+        primary_diagonal+=matrix[j][j]
+
+    secondary_diagonal=0
+    matrix=matrix[::-1]
+    for g in range(n):
+        secondary_diagonal+=matrix[g][g]
+
+    return abs(primary_diagonal-secondary_diagonal)
+
+
+print(diagonal_difference())
+
+
+
+2.
+def squares_in_matrix():
+    row_count,col_count=list(map(int,input().split(' ')))
+    matrix=[]
+    for i in range(row_count):
+        matrix.append([i for i in input().split(' ')])
+
+    еqual_chars=0
+
+    for row in range(row_count-1):
+        for col in range(col_count-1):
+            if matrix[row][col]==matrix[row][col+1]==matrix[row+1][col]==matrix[row+1][col+1]:
+                еqual_chars+=1
+
+
+    return еqual_chars
+
+
+print(squares_in_matrix())
+
+
+
+3.
+
+
+4.
+def matrix_shuffeling():
+    row_count,col_count=(list(map(int,input().split(' '))))
+    matrix=[]
+    for i in range(row_count):
+        matrix.append(list(input().split(' ')))
+
+    while True:
+        command=input()
+        if command== 'END':
+            break
+        if command.startswith('swap'):
+            command=command.split(' ')
+            left_command=command[1:]
+            if len(left_command)==4:
+                if int(command[1])<=row_count-1 and int(command[2])<=col_count-1 and int(command[3])<=row_count-1 and int(command[4])<=col_count-1:
+                    index_one=int(command[1])
+                    index_two=int(command[2])
+                    index_three=int(command[3])
+                    index_four=int(command[4])
+                    matrix[index_one][index_two],matrix[index_three][index_four]=matrix[index_three][index_four],matrix[index_one][index_two]
+                    [print(' '.join(row)) for row in matrix]
+                else:
+                    print('Invalid input!')
+            else:
+                print('Invalid input!')
+
+        else:
+            print('Invalid input!')
+
+matrix_shuffeling()
+
+
+
+5.
+def snake_matrix():
+    row_count,col_count=list(map(int,input().split(' ')))
+    snake=input()
+    matrix=[]
+    row_matrix=''
+    left_letter=''
+    start_letter=0
+    x=0
+    for i in range(row_count):
+        row_matrix=''
+        while len(row_matrix)<col_count:
+            if x==len(snake):
+                x=0
+            row_matrix+=snake[x]
+            x+=1
+        if i%2==0:
+            matrix.append(row_matrix)
+        else:
+            matrix.append(row_matrix[::-1])
+
+
+    [print(element) for element in matrix]
+
+
+
+
+snake_matrix()
+
+
+
+6.
+def get_damage(row,col,matrix):
+    counter=0
+    if row-2>=0 and col-1>=0:
+        if matrix[row-2][col-1]=='K':
+            counter+=1
+    if row-2>=0 and col+1<len(matrix):
+        if matrix[row-2][col+1]=='K':
+            counter+=1
+    if row-1>=0 and col-2>=0:
+        if matrix[row-1][col-2]=='K':
+            counter+=1
+    if row-1>=0 and col+2<len(matrix):
+        if matrix[row-1][col+2]=='K':
+            counter+=1
+    if row+1<len(matrix)and col-2>=0:
+        if matrix[row+1][col-2]=='K':
+            counter+=1
+    if row +1<len(matrix)and col+2<len(matrix):
+        if matrix[row+1][col+2]=='K':
+            counter+=1
+    if row+2<len(matrix) and col-1>=0:
+        if matrix[row+2][col-1]=='K':
+            counter+=1
+    if row+2<len(matrix) and col+1<len(matrix):
+        if matrix[row+2][col+1]=='K':
+            counter+=1
+    return counter
+
+
+
+row_count=int(input())
+matrix=[]
+positon=[]
+deleted_knights=0
+
+
+for i in range(row_count):
+    matrix.append([i for i in input()])
+
+while True:
+    max_damage = 0
+    for row in range(row_count):
+        for col in range(row_count):
+            current=matrix[row][col]
+            if current=='K':
+                damage=get_damage(row,col,matrix)
+                if damage>max_damage:
+                    max_damage=damage
+                    position=[row,col]
+    if max_damage==0:
+        break
+
+    first_pos=position[0]
+    second_pos=position[1]
+    matrix[first_pos][second_pos]='0'
+    position=[]
+    deleted_knights+=1
+
+
+print(deleted_knights)
+
+
+
+7.
+row_count=int(input())
+matrix=[]
+
+def current_matrix(row,col,matrix):
+    destoied_position=matrix[row][col]
+    if row-1>=0 and matrix[row-1][col]>0:
+        matrix[row-1][col]-=destoied_position
+    if row-1>=0 and col-1>=0 and matrix[row-1][col-1]>0:
+        matrix[row-1][col-1]-=destoied_position
+    if row-1>=0 and col+1<len(matrix) and matrix[row-1][col+1]>0:
+        matrix[row-1][col+1]-=destoied_position
+    if col-1>=0 and matrix[row][col-1]>0 and matrix[row][col-1]>0:
+        matrix[row][col-1]-=destoied_position
+    if col+1<len(matrix) and matrix[row][col+1]>0:
+        matrix[row][col+1]-=destoied_position
+    if row+1<len(matrix) and matrix[row+1][col]>0:
+        matrix[row+1][col]-=destoied_position
+    if row+1<len(matrix) and col-1>=0 and matrix[row+1][col-1]>0:
+        matrix[row+1][col-1]-=destoied_position
+    if row+1<len(matrix) and col+1<len(matrix) and matrix[row+1][col+1]>0:
+        matrix[row+1][col+1]-=destoied_position
+
+    matrix[row][col]=0
+    return matrix
+
+
+
+for i in range(row_count):
+    matrix.append(list(map(int,input().split(' '))))
+
+coordinates=input().split(' ')
+
+for i in range(len(coordinates)):
+    current_coordinates=[int(i) for i in coordinates[i].split(',')]
+    row=int(current_coordinates[0])
+    col=int(current_coordinates[1])
+    matrix=current_matrix(row,col,matrix)
+
+allive_cells=0
+sum_cells=0
+for row in range(row_count):
+    for col in range(row_count):
+        if matrix[row][col]>0:
+            allive_cells+=1
+            sum_cells+=matrix[row][col]
+
+print(f'Alive cells: {allive_cells}')
+print(f'Sum: {sum_cells}')
+[print(' '.join(map(str,row))) for row in matrix]
+
+
+
+
+8.
+row_count=int(input())
+matrix=[]
+commands=input().split(' ')
+flag=True
+
+for i in range(row_count):
+    matrix.append([i for i in input().split(' ')])
+
+coals=0
+for row in range(row_count):
+    for col in range(row_count):
+        if matrix[row][col]=='s':
+            start=[row,col]
+        elif matrix[row][col]=='c':
+            coals+=1
+
+counter=0
+coals_count=0
+row,col=start[0],start[1]
+for command in commands:
+    if command=='left' and col-1>=0:
+        start=[row,col-1]
+        if matrix[row][col-1]=='c':
+            matrix[row][col-1]='*'
+            coals_count+=1
+        elif matrix[row][col-1]=='e':
+            print(f'Game over! ({row}, {col-1})')
+            flag=False
+            break
+    elif command=='right' and col+1<len(matrix):
+        start = [row, col + 1]
+        if matrix[row][col+1]=='c':
+            matrix[row][col+1]='*'
+            coals_count+=1
+        elif matrix[row][col+1]=='e':
+            print(f'Game over! ({row}, {col+1})')
+            flag = False
+            break
+    elif command=='up' and row-1>=0:
+        start = [row-1, col]
+        if matrix[row-1][col]=='c':
+            matrix[row-1][col]='*'
+            coals_count+=1
+        elif matrix[row-1][col]=='e':
+            print(f'Game over! ({row-1}, {col})')
+            flag = False
+            break
+    elif command=='down' and row+1<len(matrix):
+        start = [row+1, col]
+        if matrix[row +1][col] == 'c':
+            matrix[row + 1][col] = '*'
+            coals_count += 1
+        elif matrix[row + 1][col] == 'e':
+            print(f'Game over! ({row+1}, {col})')
+            flag = False
+            break
+    row, col = start[0], start[1]
+    if coals==coals_count:
+        print(f'You collected all coals! ({row}, {col})')
+        flag=False
+        break
+
+
+
+if flag:
+    print(f'{coals-coals_count} coals left. ({row}, {col})')
