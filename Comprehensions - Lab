@@ -1,0 +1,33 @@
+1.
+values=input().split(', ')
+print({x:ord(x) for x in values})
+
+
+2.
+vowels=['a','o','u','i','e']
+result=[i for i in input() if i not in vowels]
+print(''.join(result))
+
+
+3.
+row_count=int(input())
+matrix=[]
+
+for i in range(row_count):
+    matrix.append(list(map(int,input().split(', '))))
+
+print([[i for i in row if i%2==0] for row in matrix])
+
+
+
+4.
+row_count=int(input())
+matrix=[list(map(int,input().split(', '))) for i in range(row_count)]
+print([number for row in matrix for number in row])
+
+
+
+5.
+start=int(input())
+end=int(input())
+print(list({i for i in range(start,end+1) for j in range(2,11) if i % j==0}))
