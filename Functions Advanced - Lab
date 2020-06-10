@@ -1,0 +1,129 @@
+1.
+def absolute_values(numbers):
+    absolute=[]
+    for number in numbers:
+        absolute.append(abs(number))
+
+    return absolute
+
+
+numbers=[float(i) for i in input().split(' ')]
+print(absolute_values(numbers))
+
+
+2.
+def rouding(numbers):
+    rounded=[]
+    for number in numbers:
+        rounded.append(round(number))
+
+    return rounded
+
+
+numbers=[float(i) for i in input().split(' ')]
+print(rouding(numbers))
+
+
+3.
+numbers=[int(i) for i in input().split(' ')]
+result = filter(lambda x: x % 2 == 0, numbers)
+print(list(result))
+
+
+4.
+def sort_numbers(numbers):
+    numbers=sorted(numbers)
+    return numbers
+
+numbers=[int(i) for i in input().split(' ')]
+print(sort_numbers(numbers))
+
+
+5.
+def min_max_sum(numbers):
+    print(f'The minimum number is {min(numbers)}')
+    print(f'The maximum number is {max(numbers)}')
+    print(f'The sum number is: {sum(numbers)}')
+
+
+numbers=[int(i) for i in input().split(' ')]
+min_max_sum(numbers)
+
+
+6.
+def multiply(*args):
+    result=1
+    for x in args:
+        result*=x
+
+    return result
+    
+ 
+7.
+def operate(x,*args):
+    if x=='*' or x == '/':
+        result=1
+    else:
+        result = 0
+    for element in args:
+        if x=='+':
+            result += element
+        elif x=='*':
+            result *= element
+        elif x=='-':
+            result-=element
+        elif x=='/':
+            result /= element
+
+    return result
+    
+  
+8.
+def concatenate(*args):
+    result=''
+    for x in args:
+        result+=x
+    return result
+
+
+
+9.
+def get_info(name,town,age):
+    return f'This is {name} from {town} and he is {age} years old'
+    
+    
+   
+10.
+def character_combination(index,string):
+    if index>=len(string):
+        print(''.join(string))
+        return
+    character_combination(index+1,string)
+
+    for i in range(index+1,len(string)):
+        string[index],string[i]=string[i],string[index]
+        character_combination(index+1,string)
+        string[index],string[i]=string[i],string[index]
+
+
+string=list(input())
+character_combination(0,string)
+
+
+
+11.
+def get_combination(values,k,comb=[]):
+    if len(comb)==k:
+        print(', '.join(comb))
+        return
+    for i in range(len(values)):
+        x=values[i]
+        comb.append(x)
+        get_combination(values[i+1:],k,comb)
+        comb.pop()
+
+
+
+values=input().split(', ')
+k=int(input())
+get_combination(values, k)
