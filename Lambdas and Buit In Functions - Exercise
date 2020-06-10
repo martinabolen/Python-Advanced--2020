@@ -1,0 +1,67 @@
+1.
+names=[i for i in input().split(' ')]
+print(' '.join(sorted(names,reverse=True)))
+
+2.
+string=[i for i in input().split(' ')]
+lenght=len(string)
+numbers=sorted([int(x) for x in string if x.isdigit()])
+for i in ((filter(lambda x:x>lenght,numbers))):
+    print(i,end=' ')
+    
+    
+3.
+x=int(input())
+numbers=list(map(int,input().split(' ')))
+
+filtered_numbers=list(map(lambda number:number*x,numbers))
+print(' '.join(map(str,filtered_numbers)))
+
+
+4.
+numbers=list(map(int,input().split(' ')))
+print(abs(sum([i for i in numbers if i < 0])))
+
+
+5.
+numbers=[float(i) for i in input().split(' ')]
+lenght=len(numbers)
+print(sum(list(map(round,numbers))* lenght))
+
+
+6.
+numbers=[float(i) for i in input().split(' ')]
+numbers=list(map(round,numbers))
+print(min(numbers))
+print(max(numbers))
+numbers=list(set(numbers))
+numbers=(sorted(map(lambda x:x*3,numbers)))
+for numb in numbers:
+    print(numb,end=' ')
+    
+    
+7.
+names=[i for i in input().split(' ')]
+names=list(filter(lambda el:el[0].isupper() and el[1:].islower(),names))
+print(len(''.join(names)))
+
+
+8.
+numbers=[int(i) for i in input().split(' ')]
+positive=list(filter(lambda number:number>0,numbers))
+negative=list(filter(lambda number:number<0,numbers))
+print(sum(negative))
+print(sum(positive))
+if abs(sum(negative))>sum(positive):
+    print('The negatives are stronger than the positives')
+else:
+    print('The positives are stronger than the negatives')
+    
+    
+9.
+command=input()
+numbers=[int(i) for i in input().split(' ')]
+if command=='Odd':
+    print(sum(list(filter(lambda number:number%2!=0,numbers)))*len(numbers))
+else:
+    print(sum(list(filter(lambda number: number % 2 == 0, numbers))) * len(numbers))
