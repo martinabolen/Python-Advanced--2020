@@ -1,0 +1,121 @@
+1.
+words=input().split(' ')
+[print(word) for word in words if len(word)%2==0]
+
+
+2.
+string=input().split(', ')
+names=[(f'{name} -> {len(name)}') for name in string]
+print(', '.join(names))
+
+
+3.
+countries=tuple(input().split(', '))
+cities=tuple(input().split(', '))
+x=zip(countries,cities)
+[print(f'{element[0]} -> {element[1]}') for element in tuple(x)]
+
+
+4.
+numbers=[int(i) for i in input().split(', ')]
+evens=[number for number in numbers if number%2==0]
+odd=[number for number in numbers if number%2!=0]
+positive=[number for number in numbers if number>=0]
+negative=[number for number in numbers if number<0]
+
+print(f"Positive: {', '.join(map(str,positive))}")
+print(f"Negative: {', '.join(map(str,negative))}")
+print(f"Even: {', '.join(map(str,evens))}")
+print(f"Odd: {', '.join(map(str,odd))}")
+
+
+5.
+row_count=int(input())
+matrix=[list(map(int,input().split(', '))) for i in range(row_count)]
+primary_diagonal=[matrix[i][i] for i in range(row_count)]
+secondary_diagonal=[matrix[i][j] for i in range(row_count) for j in range(row_count) if i+j==row_count-1]
+print(f"First diagonal: {', '.join(map(str,primary_diagonal))}. Sum: {sum(primary_diagonal)}")
+print(f"Second diagonal: {', '.join(map(str,secondary_diagonal))}. Sum: {sum(secondary_diagonal)}")
+
+6.
+r,c=list(map(int,input().split(' ')))
+row_char=97
+martix=[[(None)] * c for i in range(r)]
+
+for i in range(r):
+    col_char=row_char
+    for j in range(c):
+        martix[i][j]=''
+        martix[i][j]=chr(row_char) + chr(col_char) + chr(row_char)
+        col_char+=1
+    row_char+=1
+
+
+[print(' '.join(row)) for row in martix]
+
+7.
+numbers=input().split('|')
+new_numbers=[]
+for element in numbers[::-1]:
+    element=element.replace(' ','')
+    new_numbers.append(element)
+
+result=(''.join(new_numbers))
+[print(i,end=' ') for i in result]
+
+
+8.
+heroes_name=input().split(', ')
+dict_items={}
+dict_costs={}
+
+for hero in heroes_name:
+    dict_items[hero]=[]
+
+for hero in heroes_name:
+    dict_costs[hero]=0
+
+
+while True:
+    command=input()
+    if command=='End':
+        break
+    name=command.split('-')[0]
+    item=command.split('-')[1]
+    cost=int(command.split('-')[2])
+    if item not in dict_items[name]:
+        dict_items[name].append(item)
+        dict_costs[name]+=cost
+
+
+for key,value in dict_items.items():
+    print(f'{key} -> Items: {len(dict_items[key])}, Cost: {dict_costs[key]}')
+    
+    
+ 9.
+ categories=input().split(', ')
+n=int(input())
+dict={category: {} for category in categories}
+quantity_count=0
+quality_count=0
+
+
+for i in range(n):
+    category, item, quantity_and_quality = input().split(' - ')
+    quantity, quality = quantity_and_quality.split(';')
+    quantity_count = int(quantity.split(':')[1])
+    quality_count = int(quality.split(':')[1])
+    if category in dict:
+        dict[category][item]={'quantity':quantity_count , 'quality':quality_count}
+
+
+
+count_items=sum([dict[x][y]['quantity'] for x in dict for y in dict[x]])
+sums_quality=sum([dict[x][y]['quality'] for x in dict for y in dict[x]])
+average_quality=sums_quality/len(categories)
+
+
+print(f'Count of items: {count_items}')
+print(f'Average quality: {average_quality:.2f}')
+for key,values in dict.items():
+    print(f"{key} -> {', '.join(values)}")
