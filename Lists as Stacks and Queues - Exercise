@@ -291,5 +291,62 @@ else:
 print(f'Wasted litters of water: {total_wasted_water}')
 
 
+1. *Robotics
+from collections import deque
+robots=deque([i for i in input().split(";")])
+exact_time=[int(i) for i in input().split(":")]
+from collections import defaultdict
+spared_time=defaultdict(int)
+orders=deque([])
+robots_time_order={}
+from datetime import time
+import datetime
+
+
+for element in robots:
+    name=element.split("-")[0]
+    spared_time[name]=0
+
+def defining_time(hours,minutes,seconds):
+    seconds+=1
+    if seconds>=60:
+        minutes+=1
+        seconds=0
+        if minutes>=60:
+            hours+=1
+            minutes=0
+    return [hours,minutes,seconds]
+
+point=False
+command=''
+
+while True:
+    if command=="End":
+        point=True
+    if not point:
+        command=input()
+        if command != "End":
+            order=command
+            orders.appendleft(order)
+    if command=="End" and len(orders)==0:
+        break
+    robot=robots.popleft()
+    robots.append(robot)
+    robot_name=robot.split("-")[0]
+    needed_time=int(robot.split("-")[1])
+    exact_time = defining_time(int(exact_time[0]), int(exact_time[1]), int(exact_time[2]))
+    for el in spared_time.items():
+        if el[1]>0:
+            spared_time[el[0]]-=1
+    if spared_time[robot_name]==0:
+        spared_time[robot_name]=needed_time
+    if not 0<spared_time[robot_name]<needed_time:
+        order=orders.popleft()
+        print(f'{robot_name} - {order} {time(exact_time[0], exact_time[1], exact_time[2]).strftime("%H:%M:%S")}')
+
+
+
+
+
 
     
